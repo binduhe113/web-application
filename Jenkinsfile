@@ -30,16 +30,16 @@ pipeline{
         stage('Containerisation'){
             steps{
                 sh '''
-                docker run -it -d --name tom -p 9000:8080 binduhe113/project-1
+                docker run -it -d --name tomcat -p 9001:8080 binduhe113/project-1
                 '''
             }
         }
         stage('Login to Docker Hub') {
                     steps {
                         script {
-                             withCredentials([usernamePassword(credentialsId: '8e747a49-7bde-41c6-a498-a6900d48a88e', passwordVariable: 'user_password', usernameVariable: 'user_name')]) {
-                             sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
-                             }
+                            withCredentials([usernamePassword(credentialsId: 'docker_new', passwordVariable: 'user_password', usernameVariable: 'user_name')]) {
+                            sh "echo $user_password | docker login -u $user_name --password-stdin"
+                            }
                                 
                             }
                         }
